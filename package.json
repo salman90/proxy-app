@@ -1,0 +1,24 @@
+{
+  "name": "express-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
+    "mariadb": "^2.5.4",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^2.0.1"
+  }
+}

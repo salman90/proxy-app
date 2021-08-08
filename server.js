@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 
-db.sequelize.sync();
+db.DevDB.sequelize.sync();
 require("./app/routes/malware.routes")(app);
 require("./app/routes/malware.routes")(app2);
 require("./app/routes/malware.routes")(app3);
@@ -63,7 +63,12 @@ const customRouter = function (req) {
 const rewriteFn = function (path, req) {
     let hostname    = req.params.hostname;
     let pathEnd     = req.params[0];
-    return path.replace(`/urlinfo/1/${hostname}/${pathEnd}`, `/urlinfo/1/${hostname}/${pathEnd}`);
+    if(pathEnd){
+        return path.replace(`/urlinfo/1/${hostname}/${pathEnd}`, `/urlinfo/1/${hostname}/${pathEnd}`);
+    }else{
+        return path.replace(`/urlinfo/1/${hostname}`, `/urlinfo/1/${hostname}`);
+
+    }
 };
 
 const options = {
@@ -78,7 +83,7 @@ const options = {
 const exampleProxy = createProxyMiddleware(options);
 
 proxyApp.get("/urlinfo/1/:hostname/*", exampleProxy);
-// proxyApp.use("/urlinfo/1/:hostname", exampleProxy);
+proxyApp.use("/urlinfo/1/:hostname", exampleProxy);
 
 proxyApp.listen(proxyPort, () => {
     console.log(`listing on port ${proxyPort}...`);

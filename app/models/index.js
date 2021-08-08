@@ -1,26 +1,40 @@
 const dbConfig  = require('../config/db.config.js');
 const Sequelize = require("sequelize"); 
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    port: dbConfig.PORT,
-    dialect: dbConfig.dialect,
+const sequelize = new Sequelize(dbConfig.development.DB, dbConfig.development.USER, dbConfig.development.PASSWORD, {
+    host: dbConfig.development.HOST,
+    port: dbConfig.development.PORT,
+    dialect: dbConfig.development.dialect,
     pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
+        max: dbConfig.development.pool.max,
+        min: dbConfig.development.pool.min,
+        acquire: dbConfig.development.pool.acquire,
+        idle: dbConfig.development.pool.idle
     }
 })
 
-const db = {};
+const sequelizeTest = new Sequelize(dbConfig.test.DB, dbConfig.test.USER, dbConfig.test.PASSWORD, {
+    host: dbConfig.test.HOST,
+    port: dbConfig.test.PORT,
+    dialect: dbConfig.test.dialect,
+    pool: {
+        max: dbConfig.test.pool.max,
+        min: dbConfig.test.pool.min,
+        acquire: dbConfig.test.pool.acquire,
+        idle: dbConfig.test.pool.idle
+    }
+})
+const DevDB = {};
+const testDB = {};
 
 
+DevDB.Sequelize = Sequelize;
+testDB.Sequelize = Sequelize;
+DevDB.sequelize = sequelize;
+testDB.sequelize = sequelizeTest;
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+DevDB.malware = require("./malware.model.js")(sequelize, Sequelize);;
+testDB.malware = require("./malware.model.js")(sequelizeTest, Sequelize);;
 
-db.malware = require("./malware.model.js")(sequelize, Sequelize);;
-
-module.exports = db;
+module.exports = { DevDB, testDB} ;
 

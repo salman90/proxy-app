@@ -78,10 +78,7 @@ const options = {
 const exampleProxy = createProxyMiddleware(options);
 
 proxyApp.get("/urlinfo/1/:hostname/*", exampleProxy);
-
-
-
-
+// proxyApp.use("/urlinfo/1/:hostname", exampleProxy);
 
 proxyApp.listen(proxyPort, () => {
     console.log(`listing on port ${proxyPort}...`);
@@ -99,4 +96,12 @@ app2.listen(port8000, () => {
 app3.listen(port9000, () => {
     console.log(`listen on port ${port9000}...`)
 })
+
+
+module.exports = {
+    proxyApp,
+    app,
+    app2,
+    app3
+}
 

@@ -1,3 +1,6 @@
+/**
+ * database configuration for development and test environments
+ */
 module.exports = {
     development: {
         HOST: "localhost",

@@ -1,6 +1,10 @@
 const dbConfig  = require('../config/db.config.js');
 const Sequelize = require("sequelize"); 
 
+
+/**
+ * create new sequelize instance with database configuration for development environment
+ */
 const sequelize = new Sequelize(dbConfig.development.DB, dbConfig.development.USER, dbConfig.development.PASSWORD, {
     host: dbConfig.development.HOST,
     port: dbConfig.development.PORT,
@@ -13,6 +17,9 @@ const sequelize = new Sequelize(dbConfig.development.DB, dbConfig.development.US
     }
 })
 
+/**
+ * create new sequelize instance with database configuration for testing environment
+ */
 const sequelizeTest = new Sequelize(dbConfig.test.DB, dbConfig.test.USER, dbConfig.test.PASSWORD, {
     host: dbConfig.test.HOST,
     port: dbConfig.test.PORT,

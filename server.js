@@ -5,8 +5,6 @@ const app3     = express();
 const proxyApp = express();
 
 
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,20 +28,31 @@ const port9000 = 9000;
 const port1000 = 1000;
 
 
-
+/**
+ * @description runs proxy server on port 8007
+ */
 proxyApp.listen(proxyPort, () => {
     console.log(`listing on port ${proxyPort}...`);
 })
 
+/**
+ * @description runs app on port 1000
+ */
 app.listen(port1000, () => {
     console.log(`listing on port ${port1000}...`);
 });
 
 
+/**
+ * @description runs app on port 8000
+ */
 app2.listen(port8000, () => {
     console.log(`listen on port ${port8000}...`)
 })
 
+/***
+ * @description runs app on port 9000
+ */
 app3.listen(port9000, () => {
     console.log(`listen on port ${port9000}...`)
 })

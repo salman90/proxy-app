@@ -20,6 +20,7 @@ const sequelize = new Sequelize(dbConfig.development.DB, dbConfig.development.US
 /**
  * create new sequelize instance with database configuration for testing environment
  */
+
 const sequelizeTest = new Sequelize(dbConfig.test.DB, dbConfig.test.USER, dbConfig.test.PASSWORD, {
     host: dbConfig.test.HOST,
     port: dbConfig.test.PORT,
@@ -31,14 +32,18 @@ const sequelizeTest = new Sequelize(dbConfig.test.DB, dbConfig.test.USER, dbConf
         idle: dbConfig.test.pool.idle
     }
 })
+
 const DevDB = {};
 const testDB = {};
 
 
 DevDB.Sequelize = Sequelize;
 testDB.Sequelize = Sequelize;
+
 DevDB.sequelize = sequelize;
 testDB.sequelize = sequelizeTest;
+
+
 
 DevDB.malware = require("./malware.model.js")(sequelize, Sequelize);;
 testDB.malware = require("./malware.model.js")(sequelizeTest, Sequelize);;

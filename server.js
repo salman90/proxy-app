@@ -1,67 +1,33 @@
 const express  = require('express');
 const app      = express();
-const app2     = express();
-const app3     = express();
-const proxyApp = express();
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app2.use(express.json());
-app2.use(express.urlencoded({ extended: true }));
-app3.use(express.json());
-app3.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
+require('dotenv').config();
 
 db.DevDB.sequelize.sync();
+// db.testDB.sequelize.sync({ force: true });
 
-require("./app/routes/malware.path:1000.routes")(app);
-require("./app/routes/malware.path:9000.routes")(app3);
-require("./app/routes/malware.routes")(app2);
-require("./app/routes/malware.proxy.routes")(proxyApp);
+require("./app/routes/malware.routes")(app);
 
-const proxyPort = 8007;
-const port8000 = 8000;
-const port9000 = 9000;
-const port1000 = 1000;
+const port = process.env.PORT || 3000;
 
 
-/**
- * @description runs proxy server on port 8007
- */
-proxyApp.listen(proxyPort, () => {
-    console.log(`listing on port ${proxyPort}...`);
-})
 
 /**
  * @description runs app on port 1000
  */
-app.listen(port1000, () => {
-    console.log(`listing on port ${port1000}...`);
+app.listen(port, () => {
+    console.log(`listing on port ${port}...`);
 });
 
 
-/**
- * @description runs app on port 8000
- */
-app2.listen(port8000, () => {
-    console.log(`listen on port ${port8000}...`)
-})
-
-/***
- * @description runs app on port 9000
- */
-app3.listen(port9000, () => {
-    console.log(`listen on port ${port9000}...`)
-})
-
 
 module.exports = {
-    proxyApp,
     app,
-    app2,
-    app3
 }
 
